@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}
+Key List
+{% endblock %}
+
+{% block active_home %}active{% endblock %}
+
+{% block header %}
+<!-- alert message -->
+{% if messages %}
+{% for message in messages %}
+<div style="position:fixed;top:0;z-index:10000;width:100%;border-radius:0;"
+    class="{{ message.tags }} alert-dismissible fade show mb-0" role="alert">
+    {{ message }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endfor %}
+{% endif %}
+{% endblock %}
+
+
+{% block contents %}
+<!-- set modal diaglog -->
+<div class="modal fade" tabindex="-1" role="dialog" id="modal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content"></div>
+    </div>
+</div>
+
+<!-- main -->
+<div class="container">
+    <div class="text-center m-5">
+        <h1>List of registered NFC keys</h1>
+    </div>
+    {% include "_keys_table.html" %}
+</div>
+{% endblock %}
+
+{% block extrascripts %}
+<script type="text/javascript">
+    $(function () {
+        // Update Key asynchronous button
+        // message
+        var asyncSuccessMessageUpdate = [
+            "<div ",
+            "style='position:fixed;top:0;z-index:10000;width:100%;border-radius:0;' ",
+            "class='alert alert-icon alert-success alert-dismissible fade show mb-0' role='alert'>",
+            "Success: Key was updated.",
+            "<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>",
+            "</div>",
+            "<script>",
+            "$('.alert').fadeTo(2000, 500).slideUp(500, function () {$(this).remove();});",
+            "<\/script>"
+        ].join("");
+
+        // modal form
+        function updateKeyModalForm() {
+            $(".update-key").each(function () {
+                $(this).modalForm({
+                    formURL: $(this).data("form-url"),
+                    asyncUpdate: true,
+                    asyncSettings: {
+                        closeOnSubmit: true,
+                        successMessage: asyncSuccessMessageUpdate,
+                        dataUrl: "keys/",
+                        dataElementId: "#keys-table",
+                        dataKey: "table",
+                        addModalFormFunction: reinstantiateModalForms
+                    }
+                });
+            });
+        }
+        updateKeyModalForm();
+
+        // Delete Key buttons - formURL is retrieved from the data of the element
+        function deleteKeyModalForm() {
+            $(".delete-key").each(function () {
+                $(this).modalForm({
+                    formURL: $(this).data("form-url"), isDeleteForm: true,
+                });
+            });
+        }
+        deleteKeyModalForm();
+
+        function reinstantiateModalForms() {
+            updateKeyModalForm();
+            deleteKeyModalForm();
+        }
+
+        // Hide alert message
+        $(".alert").fadeTo(2000, 500).slideUp(500, function () {
+            $(this).remove();
+        });
+    });
+</script>
+{% endblock extrascripts %}

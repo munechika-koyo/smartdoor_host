@@ -1,0 +1,127 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif
+}
+
+body {
+    background: #fff;
+    min-height: 90vh
+}
+
+.wrapper {
+    max-width: 500px;
+    margin: 50px auto
+}
+
+.wrapper .card {
+    max-width: 400px;
+    min-height: 200px;
+    margin: 30px;
+    background: #fff;
+    overflow: hidden;
+    border: 1px solid #000;
+    border-radius: 15px;
+    padding: 0.8rem;
+    cursor: auto;
+
+}
+
+.wrapper .card a {
+    text-decoration: none;
+    color: #000
+}
+
+.wrapper .card a:hover {
+    color: #000
+}
+
+.wrapper .card .input-field {
+    border: 1px solid #000;
+    border-radius: 5px;
+    color: #000;
+    padding: 0.3rem
+}
+
+.wrapper .card .input-field input {
+    background-color: inherit;
+    border: none;
+}
+
+.wrapper .card .input-field input.form-control,
+.wrapper .card .input-field input.form-control:focus {
+    border: none;
+    outline: none;
+    box-shadow: none;
+    color: #000
+}
+
+.wrapper .card .input-field input::placeholder {
+    color: rgb(84, 84, 84)
+}
+
+.wrapper .card .input-field span.show-pwd-toggle {
+    cursor: pointer;
+    transition: all;
+}
+
+.wrapper .card .btn.btn-primary {
+    border-radius: 20px;
+    width: 300px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+.wrapper .card .btn.btn-primary:hover {
+    background: rgb(198, 198, 198);
+    color: #000;
+    border: #000;
+}
+
+.wrapper .card .btn.btn-primary:focus {
+    border: none;
+    box-shadow: none
+}
+
+.wrapper .card .text-light-white {
+    color: #ddd
+}
+
+.wrapper .card .line span.connect {
+    position: absolute;
+    top: -12px;
+    left: 33%;
+    color: #000;
+    padding: 0 0.3rem;
+    z-index: 100;
+    border-radius: 2px;
+    background-color: #fff
+}
+
+.wrapper .card .connections a img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover
+}
+
+@media(max-width: 370px) {
+    .wrapper .card .line:after {
+        left: 27%
+    }
+}
+
+@media(max-width: 350px) {
+    .wrapper {
+        margin: 10px auto
+    }
+
+    .wrapper .card {
+        margin: 10px
+    }
+}

@@ -1,0 +1,40 @@
+<table id="keys-table" class="table">
+    <thead>
+        <tr>
+            <th class="text-center" scope="col">#</th>
+            <th class="text-center" scope="col">Name</th>
+            <th class="text-center" scope="col">Device</th>
+            <th class="text-center" scope="col">IDm</th>
+            <th class="text-center" scope="col">Allow 423 room</th>
+            <th class="text-center" scope="col">Allow 475 room</th>
+            <th class="text-center" scope="col">Created at</th>
+            <th class="text-center" scope="col">Update / Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for key in keys %}
+        <tr>
+            <th class="text-center" scope="row">{{ forloop.counter }}</th>
+            <td class="text-center">{{ key.name }}</td>
+            <td class="text-center">{{ key.device }}</td>
+            <td class="text-center">{{ key.idm }}</td>
+            <td class="text-center">{{ key.allow_423 }}</td>
+            <td class="text-center">{{ key.allow_475 }}</td>
+            <td class="text-center">{{ key.created_at|date:"Y/m/d" }}</td>
+            <td class="text-center">
+                <!-- Update Key buttons -->
+                <button type="button" class="update-key btn btn-sm btn-primary"
+                    data-form-url="{% url 'keymanagement:update_key' key.pk %}">
+                    <span class="fa-solid fa-pencil"></span>
+                </button>
+                <!-- Delete Key buttons -->
+                <button type="button" class="delete-key btn btn-sm btn-danger"
+                    data-form-url="{% url 'keymanagement:delete_key' key.pk %}">
+                    <span class="fa-solid fa-trash-can"></span>
+                </button>
+            </td>
+        </tr>
+        {% endfor %}
+
+    </tbody>
+</table>

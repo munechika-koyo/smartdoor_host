@@ -1,0 +1,29 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres
+    volumes:
+      - type: bind
+        source: ./data/db
+        target: /var/lib/postgresql/data
+    env_file:
+      - .postgre_env
+    ports:
+      - "5432:5432"
+  web:
+    build: .
+    volumes:
+      - type: bind
+        source: .
+        target: /smartdoor_host
+    env_file:
+      - .postgre_env
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    command: >
+      sh -c "python smartdoor_prj/manage.py makemigrations &&
+             python smartdoor_prj/manage.py migrate &&
+             python smartdoor_prj/manage.py runserver 0.0.0.0:8000"

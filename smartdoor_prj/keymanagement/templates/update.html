@@ -1,0 +1,59 @@
+{% load widget_tweaks %}
+
+<form method="post" action="">
+    {% csrf_token %}
+
+    <div class="modal-header">
+        <h3 class="modal-title">Update Key</h3>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+
+    <div class="modal-body">
+
+        <div class="{% if form.non_field_errors %}invalid mb-2{% endif %}">
+            {% for error in form.non_field_errors %}
+            {{ error }}
+            {% endfor %}
+        </div>
+
+        {% for field in form %}
+        <div class="row mb-3 {% if field.errors %}invalid{% endif %}">
+
+            <!-- Allow checkbox field -->
+            {% if "Allow" in field.label %}
+            <label for="{{ field.id_for_label }}" class="col-sm-3 form-check-label">
+                <strong> {{ field.label_tag }}</strong>
+            </label>
+            <div class="col-sm-6">
+                {{ field }}
+            </div>
+
+            <!-- others field -->
+            {% else %}
+            <label for="{{ field.id_for_label }}" class="col-sm-3 col-form-label">
+                <strong> {{ field.label_tag }}</strong>
+            </label>
+            <div class="col-sm-6">
+                {% if field.errors %}
+                {% render_field field class="form-control is-invalid" %}
+                <div class="invalid-feedback">
+                    {% for error in field.errors %}
+                    {{ error }}
+                    {% endfor %}
+                </div>
+                {% else %}
+                {% render_field field class="form-control" %}
+                {% endif %}
+            </div>
+
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Update</button>
+    </div>
+
+</form>
