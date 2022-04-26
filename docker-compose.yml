@@ -8,9 +8,7 @@ services:
         source: ./data/db
         target: /var/lib/postgresql/data
     env_file:
-      - .postgre_env
-    ports:
-      - "5432:5432"
+      - .dev_env
   web:
     build: .
     volumes:
@@ -18,7 +16,7 @@ services:
         source: .
         target: /smartdoor_host
     env_file:
-      - .postgre_env
+      - .dev_env
     ports:
       - "8000:8000"
     depends_on:
