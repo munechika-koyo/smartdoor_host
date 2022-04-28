@@ -17,11 +17,11 @@ you will need to set the login username and password.
 
 In this case, atach the running docker container:
 ```Shell
-docker exec -it smartdoor_host_web bash
+docker exec -it gunicorn-django bash
 ```
 and excute the creating superuser command:
 ```Shell
-python smartdoor_prj/manage.py createsuperuser
+python manage.py createsuperuser
 ```
 Please refer to [how to create admin user](https://docs.djangoproject.com/en/4.0/intro/tutorial02/#creating-an-admin-user).
 

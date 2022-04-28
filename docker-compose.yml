@@ -3,25 +3,59 @@ version: "3.9"
 services:
   db:
     image: postgres
+    container_name: postgres
     volumes:
-      - type: bind
-        source: ./data/db
+      - type: volume
+        source: db_data
         target: /var/lib/postgresql/data
     env_file:
-      - .dev_env
-  web:
+      - .env
+
+  gunicorn:
     build: .
+    container_name: gunicorn-django
     volumes:
+      # source files
       - type: bind
         source: .
         target: /smartdoor_host
+      # gunicoen unix socket
+      - type: volume
+        source: gunicorn
+        target: /var/run/gunicorn
     env_file:
-      - .dev_env
-    ports:
-      - "8000:8000"
+      - .env
     depends_on:
       - db
     command: >
-      sh -c "python smartdoor_prj/manage.py makemigrations &&
-             python smartdoor_prj/manage.py migrate &&
-             python smartdoor_prj/manage.py runserver 0.0.0.0:8000"
+      sh -c "
+        python manage.py migrate
+        gunicorn smartdoor_prj.wsgi --bind=unix:/var/run/gunicorn/gunicorn.sock
+      "
+
+  nginx:
+    image: nginx
+    container_name: nginx
+    ports:
+      - target: 80
+        published: 80
+    volumes:
+      # .conf file
+      - type: bind
+        source: ./nginx.conf
+        target: /etc/nginx/conf.d/default.conf
+      # gunicorn unix socket
+      - type: volume
+        source: gunicorn
+        target: /var/run/gunicorn
+      # static dir
+      - type: bind
+        source: ./smartdoor_prj/static
+        target: /static
+    depends_on:
+      - gunicorn
+
+volumes:
+  db_data:
+  gunicorn:
+    driver: local

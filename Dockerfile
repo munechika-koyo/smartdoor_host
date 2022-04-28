@@ -10,3 +10,7 @@ COPY requirements.txt /smartdoor_host/
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . /smartdoor_host/
+
+RUN mkdir -p /var/run/gunicorn
+
+WORKDIR /smartdoor_host/smartdoor_prj
