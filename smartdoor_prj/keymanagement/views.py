@@ -1,3 +1,5 @@
+import os
+import logging
 from django.http import JsonResponse
 from django.template.loader import render_to_string
 from django.urls import reverse_lazy
@@ -7,8 +9,14 @@ from django.contrib.auth.views import LoginView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from bootstrap_modal_forms.generic import BSModalUpdateView, BSModalDeleteView
+from django.conf import settings
 from .forms import LoginForm, KeyModelForm, KeyRegisterForm
 from .models import Key
+
+# path to root directory
+BASE_DIR = getattr(settings, "BASE_DIR", None)
+
+logger = logging.getLogger(__name__)
 
 
 class Login(LoginView):
@@ -31,6 +39,7 @@ class RegisterView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         form.save()
         messages.success(self.request, "Success: Key was created.")
+        logger.info(f"{form.cleaned_data['name']}'s {form.cleaned_data['device']} is registered.")
         return super().form_valid(form)
 
     def form_invalid(self, form):
@@ -41,6 +50,12 @@ class RegisterView(LoginRequiredMixin, CreateView):
 class LogView(LoginRequiredMixin, TemplateView):
     template_name = "log.html"
 
+    def get_context_data(self):
+        context = super().get_context_data()
+        with open(os.path.join(BASE_DIR, "logs", "django.log"), "r", encoding="utf-8") as f:
+            context["log_text"] = f.read()
+        return context
+
 
 class KeyUpdateView(LoginRequiredMixin, BSModalUpdateView):
     model = Key
@@ -49,12 +64,21 @@ class KeyUpdateView(LoginRequiredMixin, BSModalUpdateView):
     success_message = "Success: Key was updated."
     success_url = reverse_lazy("keymanagement:home")
 
+    def form_valid(self, form):
+        logger.info(f"{form.cleaned_data['name']}'s {form.cleaned_data['device']} is updated.")
+        return super().form_valid(form)
+
 
 class KeyDeleteView(LoginRequiredMixin, BSModalDeleteView):
     model = Key
     template_name = "delete.html"
     success_message = "Success: Key was deleted."
     success_url = reverse_lazy("keymanagement:home")
+
+    def delete(self, request, *args, **kwargs):
+        object = self.get_object()
+        logger.info(f"{object.name}'s {object.device} is deleted.")
+        return super().delete(request, *args, **kwargs)
 
 
 @login_required

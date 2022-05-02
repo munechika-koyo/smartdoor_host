@@ -32,9 +32,20 @@ LOGGING = {
     "disable_existing_loggers": False,
     "loggers": {
         # Django logger
-        "django": {"handlers": ["file"], "level": "INFO",},
+        "django": {
+            "handlers": ["file"],
+            "level": "INFO",
+        },
         # keymanagement logger
-        "keymanagement": {"handlers": ["file"], "level": "INFO",},
+        "keymanagement": {
+            "handlers": ["file"],
+            "level": "INFO",
+        },
+        # authenticate_api logger
+        "authenticate_api": {
+            "handlers": ["file"],
+            "level": "INFO",
+        }
     },
     "handlers": {
         "file": {
@@ -49,7 +60,13 @@ LOGGING = {
     },
     "formatters": {
         "prod": {
-            "format": "\t".join(["%(asctime)s", "[%(levelname)s]", "%(pathname)s(Line:%(lineno)d)", "%(message)s"])
+            "format": "\t".join(
+                [
+                    "%(asctime)s",
+                    "[%(levelname)s]",
+                    "%(message)s"
+                ]
+            )
         },
     },
 }

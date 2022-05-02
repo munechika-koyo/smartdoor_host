@@ -37,6 +37,11 @@ LOGGING = {
             "handlers": ["console"],
             "level": "DEBUG",
         },
+        # authenticate_api logger
+        "authenticate_api": {
+            "handlers": ["console"],
+            "level": "DEBUG",
+        }
     },
 
     "handlers": {
