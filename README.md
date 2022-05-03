@@ -32,7 +32,7 @@ DB_HOST=db
 DB_PORT=5432
 
 # basic settings
-ALLOWED_HOSTS=localhost,gunicorn-django
+ALLOWED_HOSTS=127.0.0.1,localhost
 
 DJANGO_SECRET_KEY=XXX
 
@@ -92,7 +92,7 @@ Then, the webpage will be available by accessing the http://localhost:8000.
 ## WebAPI authentication for Smartdoor client
 
 In order for smartdoor client to use the registration informantion to authenticate an IDm, this web sever offers the WebAPI mode.
-Access the this smartdoor host address adding the "authenticate" endpoint (like http://smartdoor-host/authenticate/),
+Access the this smartdoor host address adding the "authenticate" endpoint (like http://\<host ip address\>/authenticate/),
 and send the IDm information using html POST method with json format:
 ```json
 {"idm": "xxxaaayyyzzz"}
