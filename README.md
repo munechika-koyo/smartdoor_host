@@ -48,7 +48,7 @@ The `.env` file must be put in the same directory as `Dockerfile` is put there.
 After starting up the container with the following command for the first time:
 
 ```bash
-docker-compose up -d
+docker compose up -d
 ```
 you will need to set the login username and password.
 
