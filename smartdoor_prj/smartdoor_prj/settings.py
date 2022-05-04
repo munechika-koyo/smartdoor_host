@@ -27,7 +27,9 @@ DATABASES = {
 }
 
 # Logging
+os.makedirs(os.path.join(BASE_DIR, "logs"), exist_ok=True)
 PATH_TO_LOGFILE = os.path.join(BASE_DIR, "logs", "django.log")
+
 # if log file does not exist, generate 
 if not os.path.exists(PATH_TO_LOGFILE):
     with open(PATH_TO_LOGFILE, "w") as f:
