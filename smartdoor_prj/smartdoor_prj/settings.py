@@ -27,6 +27,12 @@ DATABASES = {
 }
 
 # Logging
+PATH_TO_LOGFILE = os.path.join(BASE_DIR, "logs", "django.log")
+# if log file does not exist, generate 
+if not os.path.exists(PATH_TO_LOGFILE):
+    with open(PATH_TO_LOGFILE, "w") as f:
+        f.write("")
+
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
@@ -51,7 +57,7 @@ LOGGING = {
         "file": {
             "level": "INFO",
             "class": "logging.handlers.TimedRotatingFileHandler",
-            "filename": os.path.join(BASE_DIR, "logs/django.log"),
+            "filename": PATH_TO_LOGFILE,
             "formatter": "prod",
             "when": "D",  # log rotation (D=Day)
             "interval": 1,  # rotation frequency
