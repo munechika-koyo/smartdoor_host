@@ -37,6 +37,15 @@ ALLOWED_HOSTS=127.0.0.1,localhost
 DJANGO_SECRET_KEY=XXX
 
 CSRF_TRUSTED_ORIGINS=http://127.0.0.1,http://localhost
+
+
+# === SSL/TLS setting =========================================================
+CA_SUBJECT=NFC-key-ca
+CA_EXPIRE=3600
+SSL_EXPIRE=3600
+SSL_SUBJECT=localhost
+SSL_DNS=localhost
+
 ```
 `CSRF_TRUSTED_ORIGINS` must contain the host server's address.
 
@@ -62,7 +71,7 @@ python manage.py createsuperuser
 ```
 Please refer to [how to create admin user](https://docs.djangoproject.com/en/4.0/intro/tutorial02/#creating-an-admin-user).
 
-After setting username and password, you can access the login page (http://localhost/login/) and input .
+After setting username and password, you can access the login page (https://localhost/login/) and input .
 
 ![Smartdoor Host login](docs/images/loginpage.png)
 *Caption: Login page*
