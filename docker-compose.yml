@@ -1,6 +1,7 @@
 version: "3.9"
 
 services:
+  # database
   db:
     image: postgres
     container_name: postgres
@@ -11,6 +12,7 @@ services:
     env_file:
       - .env
 
+  # web app
   gunicorn:
     build: .
     container_name: gunicorn-django
@@ -33,12 +35,25 @@ services:
         gunicorn smartdoor_prj.wsgi --bind=unix:/var/run/gunicorn/gunicorn.sock
       "
 
+  # create SSL Certificates
+  cert:
+    image: paulczar/omgwtfssl
+    env_file:
+      - .env
+    volumes:
+      - type: bind
+        source: ssl_certs
+        target: /certs
+
+  # web server
   nginx:
     image: nginx
     container_name: nginx
     ports:
       - target: 80
         published: 80
+      - target: 443
+        published: 443
     volumes:
       # .conf file
       - type: bind
@@ -52,10 +67,15 @@ services:
       - type: bind
         source: ./smartdoor_prj/static
         target: /static
+      # ssl cert
+      - type: bind
+        source: ssl_certs
+        target: /etc/ssl_cert
+
     depends_on:
       - gunicorn
+      - cert
 
 volumes:
   db_data:
   gunicorn:
-    driver: local
