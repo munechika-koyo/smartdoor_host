@@ -71,10 +71,14 @@ python manage.py createsuperuser
 ```
 Please refer to [how to create admin user](https://docs.djangoproject.com/en/4.0/intro/tutorial02/#creating-an-admin-user).
 
-After setting username and password, you can access the login page (https://localhost/login/) and input .
+After setting username and password, you can access the login page (https://localhost/login/) and input username/passward.
 
 ![Smartdoor Host login](docs/images/loginpage.png)
 *Caption: Login page*
+
+**NOTE**
+- when starting up containers, SSL certificates are automatically generated in ``ssl_certs`` directory. You can use CA certs there named as ``ca.pem`` if you would like to access webpage without any security warning.
+
 
 ## 3. Register NFC Key
 ---
@@ -125,3 +129,5 @@ if not authenticated,
     "auth": "invalid",
 }
 ```
+
+Smartdoor client app is been developped [here](https://github.com/munechika-koyo/smartdoor). You can combine and deploy it with this web app into a rasberry Pi.
