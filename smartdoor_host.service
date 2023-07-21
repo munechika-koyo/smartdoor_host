@@ -1,0 +1,15 @@
+[Unit]
+Description = Smartdoor KeyManagement Web application
+Wants = multi-user.target
+Before = smartdoor.service
+
+[Service]
+WorkingDirectory = /home/pi/smartdoor_host
+ExecStart = docker compose up -d --no-recreate
+#ExecStop = docker compose down
+Restart = no
+Type = oneshot
+User = pi
+
+[Install]
+WantedBy = multi-user.target
