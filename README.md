@@ -65,7 +65,7 @@ Attach to the running docker container:
 ```shell
 docker exec -it gunicorn-django bash
 ```
-and excute the `creatingsuperuser` command:
+and excute the `manage.py` by `python` interpreter with  `createsuperuser` command:
 ```bash
 python manage.py createsuperuser
 ```
