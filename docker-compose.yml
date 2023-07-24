@@ -40,6 +40,7 @@ services:
   # create SSL Certificates
   cert:
     image: paulczar/omgwtfssl
+    container_name: ssl
     env_file:
       - .env
     volumes:
