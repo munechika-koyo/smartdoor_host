@@ -1,7 +1,7 @@
 [Unit]
 Description = Backup timer for Smartdoor Host database
 
-[Service]
+[Timer]
 OnCalendar = weekly
 Persistent = true
 
