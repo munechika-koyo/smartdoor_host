@@ -1,0 +1,12 @@
+[Unit]
+Description = Backup Smartdoor Host database
+
+[Service]
+WorkingDirectory = /home/pi
+ExecStart = docker run --rm --volumes-from postgres -v `pwd`:/backup busybox tar cvf /backup/smartdoor_backup.tar /var/lib/postgresql/data
+Restart = no
+Type = oneshot
+User = pi
+
+[Install]
+WantedBy = multi-user.target

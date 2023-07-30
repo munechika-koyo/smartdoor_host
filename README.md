@@ -9,6 +9,15 @@ A Django web application to manage NFC keys for smartdoor cliant.
 This repository includes `Dockerfile` and `docker-compose.yaml` files so that you can easily setup the web application in a docker container.
 The instruction to deploy is given as follows.
 
+## Before getting started
+The `paulczar/omgwtfssl` container image is used to create SSL certification, however, there is no arm64 version of this image for now. Therefore, if you use the arm based machine, you need to build the image by downloading sources from github repository (https://github.com/paulczar/omgwtfssl) and building its docker image like the following:
+```bash
+git clone https://github.com/paulczar/omgwtfssl.git
+cd omgwtfssl
+docker build -t paulczar/omgwtfssl .
+```
+Then, docker-compose can handle the built image when orchestrating containers.
+'''
 
 ## 1. Set environmental values
 
@@ -133,3 +142,25 @@ if not authenticated,
 ```
 
 Smartdoor client app is been developped [here](https://github.com/munechika-koyo/smartdoor). You can install and use it as a smartdoor client.
+
+
+## Start up automatically when booting
+Registering commands as a `systemd` service, you can start up the web application automatically when booting.
+To register the service, move into the `service` directory and excute the following command:
+```bash
+source register.sh
+```
+This script also registers the service of database backup which is automatically executed every week.
+A backup file is created in the home directory. The default user name is `pi`, so the backup file is created as `/home/pi/smartdoor_backup.tar`.
+
+If you would like to start these services manually, excute the following command:
+```bash
+sudo systemctl start smartdoor.service
+sudo systemctl start smartdoor_backup.timer
+```
+or, reboot the system.
+
+If you restore the database from the backup file, move into the `service` directory and excute the following command:
+```bash
+source restore.sh
+```

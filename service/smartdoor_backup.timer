@@ -1,0 +1,9 @@
+[Unit]
+Description = Backup timer for Smartdoor Host database
+
+[Service]
+OnCalendar = weekly
+Persistent = true
+
+[Install]
+WantedBy = timers.target
