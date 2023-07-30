@@ -7,7 +7,7 @@ WorkingDirectory = /home/pi/smartdoor_host
 ExecStart = docker compose up --no-recreate
 ExecStop = docker compose down
 Restart = no
-Type = oneshot
+Type = simple
 User = pi
 
 [Install]
