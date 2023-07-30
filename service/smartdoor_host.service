@@ -1,5 +1,6 @@
 [Unit]
 Description = Smartdoor Key Management Web application
+Requires=docker.service
 
 [Service]
 WorkingDirectory = /home/pi/smartdoor_host
