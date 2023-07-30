@@ -17,7 +17,14 @@ cd omgwtfssl
 docker build -t paulczar/omgwtfssl .
 ```
 Then, docker-compose can handle the built image when orchestrating containers.
-'''
+
+
+## 0. Clone this repository
+Clone this repository into your home directory.
+```bash
+git clone https://github.com/munechika-koyo/smartdoor_host.git
+cd smartdoor_host
+```
 
 ## 1. Set environmental values
 
@@ -152,6 +159,7 @@ source register.sh
 ```
 This script also registers the service of database backup which is automatically executed every week.
 A backup file is created in the home directory. The default user name is `pi`, so the backup file is created as `/home/pi/smartdoor_backup.tar`.
+If you would like to change the user name, edit `User` name at the `service/*.service` files.
 
 If you would like to start these services manually, excute the following command:
 ```bash
